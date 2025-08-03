@@ -8,11 +8,18 @@ function computerChoice () {
 //Players move
 function playerChoice() {
     while(true) {
-        const input = prompt("Choose rock, paper or scissors:").toLowerCase();
-        if(["rock", "paper", "scissors"].includes(input)) {
-            return input
+        const input = prompt("Choose rock, paper or scissors:");
+        if(input === null) {
+            alert("Game cancelled.");
+            throw new Error("Player cancelled the game.");
+        }
+
+        const choice = input.toLowerCase();
+
+        if(["rock", "paper", "scissors"].includes(choice)) {
+            return choice;
         } else {
-            alert("Invalid choise. Please choose rock, paper or scissors!");
+            alert("Invalid choose. Please choose rock, paper or scissors!");
         }
     }
 }
@@ -34,6 +41,14 @@ function determinWinner(player, computer) {
 
 //Play a best of five game
 function playBestOfFive() {
+    console.log(
+        "Hello! You must stop the bad AI 🚩.\n\n" +
+        "The AI wants to win the game Rock, Paper, Scissors 🌑🖐️✂️ .\n" +
+        "You need to play 5 times and try to win 5️⃣.\n\n" +
+        "Each round, choose Rock, Paper, or Scissors 🌑🖐️✂️.\n" +
+        "If you write something wrong, you must try again 🔄️.\n\n" +
+        "Good luck! Have fun and use your brain! 🍀");
+        
     let playerScore = 0;
     let computerScore = 0;
 
@@ -76,29 +91,35 @@ function playBestOfFive() {
 
 //Ask player if they wanna playe again
 function replay() {
-    while(true) {
-        const input = prompt("Play another match? (Yes/No)").toLowerCase();
-        if(["yes", "y"].includes(input)) return true;
-        if(["no", "n"].includes(input)) return false;
+    while (true) {
+        const input = prompt("Play another match? (Yes/No)");
+        if (input === null) {
+            alert("Game cancelled.");
+        }
+
+        const choice = input.toLowerCase();
+        if (["yes", "y"].includes(choice)) return true;
+        if (["no", "n"].includes(choice)) return false;
+
         alert("Please enter yes or no");
     }
 }
 
 //Start the game
 function startGame() {
-    console.log(
-        "Hello! You must stop the bad AI 🚩.\n\n" +
-        "The AI wants to win the game Rock, Paper, Scissors 🌑🖐️✂️ .\n" +
-        "You need to play 5 times and try to win 5️⃣.\n\n" +
-        "Each round, choose Rock, Paper, or Scissors 🌑🖐️✂️.\n" +
-        "If you write something wrong, you must try again 🔄️.\n\n" +
-        "Good luck! Have fun and use your brain! 🍀");
+    alert("Press Ctrl+Shift+I to open the console.");
 
-        do{
+    try {
+        do {
             playBestOfFive();
-        } while(replay());
+        } while (replay());
+    } catch (e) {
+        console.log("Game ended: " + e.message);
+    }
 
-        console.log("Thanks for playing!");
+    console.log("Thanks for playing!");
 }
 
-startGame();
+document.addEventListener("DOMContentLoaded", function () {
+    startGame();
+});
